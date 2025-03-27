@@ -85,7 +85,6 @@ async function handleSwapToken(signer, tokenIn, tokenOut) {
 async function readFileData(filePath) {
   try {
     const data = await fs.readFile(filePath, "utf8");
-    console.log("📄 File content:", data);
     return data;
   } catch (error) {
     console.error("❌ Error reading file:", error);
@@ -96,7 +95,7 @@ async function readFileData(filePath) {
 async function saveFileData(filePath, data) {
   try {
     await fs.writeFile(filePath, data, "utf8");
-    console.log("✅ Save new current wallet successfully!");
+    console.log("✅ update new current wallet successfully!");
   } catch (error) {
     console.error("❌ Error saving private key:", error);
   }
@@ -118,10 +117,10 @@ async function main() {
   try {
     for (const privateKey of privateKeys) {
       const signer = new ethers.Wallet(privateKey, provider)
-  
+
       await getCurrentBalance(signer, tokenDataSource.C98, tokenDataSource.RABBIT)
       const currentPrivateKey = await readFileData(filePath)
-  
+
       // collect all tokens into 1 wallet
       if (currentPrivateKey) {
         const walletHasMoney = new ethers.Wallet(currentPrivateKey, provider)
@@ -132,18 +131,19 @@ async function main() {
           const balanceA = await getTokenBalance(walletHasMoney.address, tokenIn.address, provider)
           console.log(`Transferring ${ethers.utils.formatUnits(balanceA, tokenIn.decimals)} ${tokenIn.symbol} from ${walletHasMoney.address} to ${signer.address} ...`)
           await transferToken(walletHasMoney, signer.address, balanceA, tokenIn.address)
-  
+
           const balanceB = await getTokenBalance(walletHasMoney.address, tokenOut.address, provider)
           console.log(`Transferring ${ethers.utils.formatUnits(balanceB, tokenOut.decimals)} ${tokenOut.symbol} from ${walletHasMoney.address} to ${signer.address} ...`)
           await transferToken(walletHasMoney, signer.address, balanceB, tokenOut.address)
+
+          // update current wallet has funds
+          await saveFileData(filePath, privateKey)
         }
       }
-  
+
       await handleSwapToken(signer, tokenIn, tokenOut)
       await handleSwapToken(signer, tokenOut, tokenIn)
-  
-      await saveFileData(filePath, privateKey)
-  
+
       console.log(`Successful swap \n`)
     }
   } catch (error) {
