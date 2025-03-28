@@ -11,9 +11,6 @@ dotenv.config();
 const provider = new ethers.providers.JsonRpcProvider('https://rpc.viction.xyz')
 const privateKeys = process.env.PRIVATE_KEYS?.split(',')
 
-// const signer = new ethers.Wallet(privateKey, provider); // vi 1
-// const toWallet = new ethers.Wallet(process.env.PRIVATE_KEY_2, provider)
-
 const tokenDataSource = {
   C98: {
     address: '0x0fd0288aaae91eaf935e2ec14b23486f86516c8c',
@@ -115,10 +112,12 @@ async function main() {
   const tokenOut = tokenDataSource.RABBIT
 
   try {
+    let count = 1
     for (const privateKey of privateKeys) {
       const signer = new ethers.Wallet(privateKey, provider)
 
       await getCurrentBalance(signer, tokenDataSource.C98, tokenDataSource.RABBIT)
+      // continue
       const currentPrivateKey = await readFileData(filePath)
 
       // collect all tokens into 1 wallet
@@ -144,7 +143,8 @@ async function main() {
       await handleSwapToken(signer, tokenIn, tokenOut)
       await handleSwapToken(signer, tokenOut, tokenIn)
 
-      console.log(`Successful swap \n`)
+      console.log(`Successful swap ${count} \n`)
+      count++
     }
   } catch (error) {
     console.log(error)
