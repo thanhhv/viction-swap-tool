@@ -38,7 +38,7 @@ const getTokens = async () => {
 };
 
 async function trackingTokenPrice(signer, tokenIn, tokenOut) {
-  const amountIn = 2000; // Use 1000 C98
+  const amountIn = 500; // Use 500 C98
 
   // get quote
   const quote = await getQuote(
@@ -54,7 +54,7 @@ async function trackingTokenPrice(signer, tokenIn, tokenOut) {
 
   const tkprice = tokens.find((tk) => tokenIn.address == tk.address.toLowerCase())
   const usdAmout = tkprice ? (tkprice.price * amountIn).toFixed(2) : 0
-  const tokenOutPrice = (Number(usdAmout)/ Number(quote?.quote?.output?.amount)).toFixed(5)
+  const tokenOutPrice = (Number(usdAmout) / Number(quote?.quote?.output?.amount)).toFixed(5)
 
   const quoteBack = await getQuote(
     signer.address,
@@ -83,14 +83,14 @@ async function trackingTokenPrice(signer, tokenIn, tokenOut) {
 
 const sendToChannel = async (message) => {
   const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-  const CHANNEL_ID =process.env.TELEGRAM_CHANNEL_ID;  // or "-100xxxxxxxxx" if it's private channel
+  const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID;  // or "-100xxxxxxxxx" if it's private channel
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      chat_id: CHANNEL_ID,	
+      chat_id: CHANNEL_ID,
       text: message,
       parse_mode: "Markdown",
       disable_web_page_preview: true
@@ -115,7 +115,7 @@ async function main() {
 
   const tokenIn = tokenDataSource.C98
   const tokenOut = tokenDataSource.DADA
-  
+
   setInterval(async () => {
     try {
       const signer = new ethers.Wallet(privateKey, provider)
