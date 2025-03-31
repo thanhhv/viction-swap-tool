@@ -38,7 +38,7 @@ const getTokens = async () => {
 };
 
 async function trackingTokenPrice(signer, tokenIn, tokenOut) {
-  const amountIn = 2000; // Use 1000 C98
+  const amountIn = 500; // Use 500 C98
 
   // get quote
   const quote = await getQuote(
@@ -114,16 +114,16 @@ async function main() {
   }, 5 * 60 * 1000)
 
   const tokenIn = tokenDataSource.C98
-  const tokenOut = tokenDataSource.DADA
+  const tokenOut = tokenDataSource.RABBIT
   
-  setInterval(async () => {
+  // setInterval(async () => {
     try {
       const signer = new ethers.Wallet(privateKey, provider)
       await trackingTokenPrice(signer, tokenIn, tokenOut)
     } catch (error) {
       console.log(error)
     }
-  }, 10000);
+  // }, 10000);
 }
 
 main()
