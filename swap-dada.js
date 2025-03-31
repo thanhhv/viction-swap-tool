@@ -19,7 +19,7 @@ const tokenDataSource = {
     symbol: 'RABBIT',
   },
   DADA: {
-    address: '0x29cBfe5Cd231f2Cff086de27f0d820d8b15CC306',
+    address: '0x193fcbb7f9eea67cac0d5a94ec7ccf2141c867ec',
     decimals: 18,
     symbol: 'DADA'
   }
