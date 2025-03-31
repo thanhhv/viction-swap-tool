@@ -54,6 +54,7 @@ async function trackingTokenPrice(signer, tokenIn, tokenOut) {
 
   const tkprice = tokens.find((tk) => tokenIn.address == tk.address.toLowerCase())
   const usdAmout = tkprice ? (tkprice.price * amountIn).toFixed(2) : 0
+  const tokenOutPrice = (Number(usdAmout)/ Number(quote?.quote?.output?.amount)).toFixed(5)
 
   const quoteBack = await getQuote(
     signer.address,
@@ -72,7 +73,7 @@ async function trackingTokenPrice(signer, tokenIn, tokenOut) {
   const slippage = (100 - (tokenInBack / amountIn) * 100).toFixed(2)
 
   const message =
-    `🛠️ Calculated: swap *${amountIn}* ${tokenIn.symbol} (total $${usdAmout}) to ${quote?.quote?.output?.amount} ${tokenOut.symbol}
+    `🛠️ Calculated: swap *${amountIn}* ${tokenIn.symbol} (total $${usdAmout}) to ${quote?.quote?.output?.amount} ${tokenOut.symbol} (price: ${tokenOutPrice})
   try to convert back ${quote?.quote?.output?.amount} ${tokenOut.symbol} then get *${tokenInBack}* ${tokenIn.symbol} (total $${usdAmountBack}).
   ${slippage}% slippage
   ${Number(slippage) < 5 ? '✅ Please convert immediately.' : '⏰ Please wait for another time.'}`
