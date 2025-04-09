@@ -24,6 +24,11 @@ const tokenDataSource = {
     address: '0x193fcbb7f9eea67cac0d5a94ec7ccf2141c867ec',
     decimals: 18,
     symbol: 'DADA'
+  },
+  ONEID: {
+    address: '0x4359647fe0ef8b1ee201d5bc2bb5ab872c395f04',
+    decimals: 18,
+    symbol: 'ONEID'
   }
 };
 
@@ -114,7 +119,7 @@ async function main() {
   }, 5 * 60 * 1000)
 
   const tokenIn = tokenDataSource.C98
-  const tokenOut = tokenDataSource.DADA
+  const tokenOut = tokenDataSource.ONEID
 
   setInterval(async () => {
     try {
