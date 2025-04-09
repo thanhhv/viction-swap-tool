@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
+import Web3 from 'web3'
 import { ethers } from 'ethers';
-import { getQuote, approveToken, swap } from './utils/index.js'
+import { getQuote, approveToken, swap, getTokenBalance } from './utils/index.js'
 
 dotenv.config();
 
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.viction.xyz'));
 const provider = new ethers.providers.JsonRpcProvider('https://rpc.viction.xyz')
 const privateKey = process.env.BUY_DADA_PRIVATE_KEY
 
@@ -22,12 +24,24 @@ const tokenDataSource = {
     address: '0x193fcbb7f9eea67cac0d5a94ec7ccf2141c867ec',
     decimals: 18,
     symbol: 'DADA'
+  },
+  WHEEE: {
+    address: '0x4ade201e7a66c3c9210bab9002522c8fdbc6d1d7',
+    decimals: 18,
+    symbol: 'WHEEE'
   }
 };
 
 async function handleSwapToken(signer, tokenIn, tokenOut) {
 
-  const amountIn = 2000 // 2000 C98
+  // get current balance of tokenIn
+  const balance = await getTokenBalance(signer.address, tokenIn.address, provider)
+  console.log(`- Token ${tokenIn.symbol} balance: ${ethers.utils.formatUnits(balance, tokenIn.decimals)}`);
+
+  const balanceB = await getTokenBalance(signer.address, tokenOut.address, provider)
+  console.log(`- Token ${tokenOut.symbol} balance: ${ethers.utils.formatUnits(balanceB, tokenOut.decimals)}`);
+
+  const amountIn = balance//  web3.utils.toBigInt(web3.utils.toWei("200", "ether"))
 
   // get quote
   const quote = await getQuote(
@@ -48,15 +62,15 @@ async function handleSwapToken(signer, tokenIn, tokenOut) {
   await approveToken(tokenIn.address, uniswapRouter, signer)
 
   // // swap token
-  console.log(`Swapping ${ethers.utils.formatUnits(balance, tokenIn.decimals)} ${tokenIn.symbol} to ${tokenOut.symbol}`)
+  console.log(`Swapping ${ethers.utils.formatUnits(amountIn, tokenIn.decimals)} ${tokenIn.symbol} to ${tokenOut.symbol}`)
   await swap(quote.quote, uniswapRouter, signer)
 
 }
 
 async function main() {
 
-  const tokenIn = tokenDataSource.C98
-  const tokenOut = tokenDataSource.DADA
+  const tokenIn = tokenDataSource.WHEEE
+  const tokenOut = tokenDataSource.C98
 
   try {
     const signer = new ethers.Wallet(privateKey, provider)
