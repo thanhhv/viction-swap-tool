@@ -29,7 +29,7 @@ const tokenDataSource = {
 async function main() {
 
   const token = tokenDataSource.DADA
-  const collectToAddress = '' //update with your wallet address
+  const collectToAddress = '0xa550E1A1Cbb53fCc9a614514013C0EC3ACAe33c2' //update with your wallet address
 
   try {
     let count = 0
