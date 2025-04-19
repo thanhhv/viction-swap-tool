@@ -77,9 +77,8 @@ async function trackingTokenPrice(signer, tokenIn, tokenOut) {
   const tokenInBack = quoteBack?.quote?.output?.amount
   const slippage = (100 - (tokenInBack / amountIn) * 100).toFixed(2)
 
-  const message = `
-  Price: ${tokenOutPrice}
-  Swap: *${amountIn}* ${tokenIn.symbol} ($${usdAmout}) ➝ ${quote?.quote?.output?.amount} ${tokenOut.symbol} (₱0.00451)
+  const message = `Price: $${tokenOutPrice}
+  Swap: *${amountIn}* ${tokenIn.symbol} ($${usdAmout}) ➝ ${quote?.quote?.output?.amount} ${tokenOut.symbol}
   Reverse Swap: ${quote?.quote?.output?.amount} ${tokenOut.symbol} ➝ *${tokenInBack}* ${tokenIn.symbol} ($${usdAmountBack})
   Slippage: ${slippage}%
   ${Number(slippage) < 5 ? '✅ Please convert immediately.' : '⏰ Please wait for another time.'}
