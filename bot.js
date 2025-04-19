@@ -43,7 +43,7 @@ const getTokens = async () => {
 };
 
 async function trackingTokenPrice(signer, tokenIn, tokenOut) {
-  const amountIn = 500; // Use 500 C98
+  const amountIn = 1000; // Use 500 C98
 
   // get quote
   const quote = await getQuote(
