@@ -23,12 +23,17 @@ const tokenDataSource = {
     address: '0x193fcbb7f9eea67cac0d5a94ec7ccf2141c867ec',
     decimals: 18,
     symbol: 'DADA'
-  }
+  },
+  ONEID: {
+    address: '0x4359647fe0ef8b1ee201d5bc2bb5ab872c395f04',
+    decimals: 18,
+    symbol: 'ONEID'
+  },
 };
 
 async function main() {
 
-  const token = tokenDataSource.DADA
+  const token = tokenDataSource.ONEID
   const collectToAddress = '0xa550E1A1Cbb53fCc9a614514013C0EC3ACAe33c2' //update with your wallet address
 
   try {

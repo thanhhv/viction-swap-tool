@@ -29,7 +29,12 @@ const tokenDataSource = {
     address: '0x4ade201e7a66c3c9210bab9002522c8fdbc6d1d7',
     decimals: 18,
     symbol: 'WHEEE'
-  }
+  },
+  ONEID: {
+    address: '0x4359647fe0ef8b1ee201d5bc2bb5ab872c395f04',
+    decimals: 18,
+    symbol: 'ONEID'
+  },
 };
 
 async function handleSwapToken(signer, tokenIn, tokenOut) {
@@ -41,7 +46,8 @@ async function handleSwapToken(signer, tokenIn, tokenOut) {
   const balanceB = await getTokenBalance(signer.address, tokenOut.address, provider)
   console.log(`- Token ${tokenOut.symbol} balance: ${ethers.utils.formatUnits(balanceB, tokenOut.decimals)}`);
 
-  const amountIn = balance//  web3.utils.toBigInt(web3.utils.toWei("200", "ether"))
+  const amount = 1000
+  const amountIn = web3.utils.toBigInt(web3.utils.toWei(`${amount}`, "ether"))
 
   // get quote
   const quote = await getQuote(
@@ -69,8 +75,8 @@ async function handleSwapToken(signer, tokenIn, tokenOut) {
 
 async function main() {
 
-  const tokenIn = tokenDataSource.WHEEE
-  const tokenOut = tokenDataSource.C98
+  const tokenIn = tokenDataSource.C98
+  const tokenOut = tokenDataSource.ONEID
 
   try {
     const signer = new ethers.Wallet(privateKey, provider)
