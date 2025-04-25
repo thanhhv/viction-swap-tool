@@ -29,6 +29,11 @@ const tokenDataSource = {
     address: '0x4359647fe0ef8b1ee201d5bc2bb5ab872c395f04',
     decimals: 18,
     symbol: 'ONEID'
+  },
+  DEF: {
+    address: '0xaa6f3e52cb0571b88e58a93fd1cc0744254909d2',
+    decimals: 18,
+    symbol: 'DEF'
   }
 };
 
@@ -119,7 +124,7 @@ async function main() {
   }, 5 * 60 * 1000)
 
   const tokenIn = tokenDataSource.C98
-  const tokenOut = tokenDataSource.ONEID
+  const tokenOut = tokenDataSource.DEF
 
   setInterval(async () => {
     try {
