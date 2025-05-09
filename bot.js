@@ -34,6 +34,11 @@ const tokenDataSource = {
     address: '0xaa6f3e52cb0571b88e58a93fd1cc0744254909d2',
     decimals: 18,
     symbol: 'DEF'
+  },
+  STARBASE: {
+    address: '0xa959Fa5a859365b440367A7b0C41e1c4D3424242',
+    decimals: 18,
+    symbol: 'STARBASE'
   }
 };
 
@@ -124,7 +129,7 @@ async function main() {
   }, 5 * 60 * 1000)
 
   const tokenIn = tokenDataSource.C98
-  const tokenOut = tokenDataSource.DEF
+  const tokenOut = tokenDataSource.STARBASE
 
   setInterval(async () => {
     try {
